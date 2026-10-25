@@ -320,7 +320,7 @@ details[open] summary svg{transform:rotate(180deg)}
 <section class="page" id="pg-rule">
   <h2 class="sec">政策依据与备查</h2>
 
-  <details open>
+  <details open="open">
     <summary>中医学＋理学学位怎么算？<svg xmlns="http://www.w3.org/2000/svg" class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
     <div class="db"><p>2029 年 6 月取得<b>全日制本科毕业证＋理学学士学位</b>（中医学专业按理学门类授予）。公务员报名按<b>专业名称</b>匹配目录：中医学→<b>「医学类」</b>；职位学历栏标准写法「本科及以上并取得相应学位」，<b>极少限定学位门类</b>，理学学士完全满足。个别医务岗若备注「医学学位」再电话确认。</p></div>
   </details>
