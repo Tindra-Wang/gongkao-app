@@ -1,0 +1,467 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+<title>公考作战图</title>
+<style><![CDATA[
+
+:root{
+  --serif:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+  --sans:-apple-system,"PingFang SC","MiSans","HarmonyOS Sans SC","Microsoft YaHei",sans-serif;
+  --paper:#F6F1E7;--card:#FFFDF8;--ink:#26221B;--ink2:#6F675A;--line:#E3DBC8;
+  --seal:#B9382E;--ok:#2E7B45;--warn:#A9781E;--gold:#9A7B22;--study:#3D6FA3;
+}
+@media (prefers-color-scheme:dark){
+  :root{--paper:#171410;--card:#1F1B15;--ink:#EAE3D2;--ink2:#A69C88;--line:#332D22;
+    --seal:#E25B50;--ok:#63B57F;--warn:#D3A04B;--gold:#C7A64B;--study:#7FA8D4;}
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65}
+a{color:var(--seal);text-decoration:none;border-bottom:1px solid rgba(185,56,46,.35)}
+button{font-family:inherit}
+
+#app{max-width:520px;margin:0 auto;min-height:100%;padding-bottom:calc(64px + env(safe-area-inset-bottom))}
+
+/* ── 顶栏 ── */
+.top{display:flex;align-items:center;gap:12px;padding:14px 16px 10px;border-bottom:3px double var(--seal)}
+.seal-mini{flex:none;width:46px;height:46px;border:2.5px solid var(--seal);border-radius:50%;display:grid;place-items:center;color:var(--seal);font-family:var(--serif);font-weight:900;font-size:13px;letter-spacing:1px;transform:rotate(-8deg)}
+.top h1{font-family:var(--serif);font-weight:900;font-size:22px;margin:0;letter-spacing:2px}
+.top p{margin:2px 0 0;font-size:12px;color:var(--ink2)}
+
+/* ── 页面 ── */
+.page{display:none;padding:14px 14px 8px;animation:pgIn .22s ease}
+.page.active{display:block}
+@keyframes pgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+h2.sec{font-family:var(--serif);font-weight:900;font-size:18px;margin:18px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--seal);width:fit-content}
+h3.sub{font-family:var(--serif);font-size:15.5px;margin:16px 0 8px}
+.note{font-size:12.5px;color:var(--ink2);margin:6px 0}
+.note b{color:var(--ink)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0}
+.card h4{font-family:var(--serif);font-size:15px;margin:0 0 6px;display:flex;align-items:center;gap:7px}
+.card h4 svg{color:var(--seal)}
+.plain{list-style:none;margin:0;padding:0}
+.plain li{font-size:13.5px;color:var(--ink2);padding:6px 0;border-top:1px dashed var(--line)}
+.plain li:first-child{border-top:0;padding-top:0}
+.plain b{color:var(--ink)}
+
+/* 印章 */
+.stamp{display:inline-flex;align-items:center;justify-content:center;flex:none;min-width:50px;font-weight:700;font-size:12px;border:1.5px solid;border-radius:7px;padding:3px 8px;letter-spacing:1px}
+.stamp.ok{color:var(--ok);border-color:var(--ok);background:rgba(46,123,69,.08)}
+.stamp.warn{color:var(--warn);border-color:var(--warn);background:rgba(169,120,30,.09)}
+.stamp.no{color:var(--seal);border-color:var(--seal);background:rgba(185,56,46,.08)}
+.stamp.sm{min-width:40px;padding:1px 6px;font-size:11px}
+
+/* 倒计时 */
+.cd{display:flex;gap:12px;justify-content:center;margin:8px 0 4px}
+.cd-cell{display:flex;flex-direction:column;align-items:center}
+.cd-cell b{font-family:var(--serif);font-weight:900;font-size:44px;line-height:1;font-variant-numeric:tabular-nums}
+.cd-cell i{font-style:normal;font-size:11px;color:var(--ink2);margin-top:3px}
+.cd-mini{display:flex;gap:10px;justify-content:center;font-size:13px;color:var(--ink2);flex-wrap:wrap}
+.cd-mini b{font-family:var(--serif);color:var(--seal);font-size:17px;font-variant-numeric:tabular-nums}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:12px;border:1px solid var(--line);background:var(--card);border-radius:999px;padding:4px 11px}
+.chip b{color:var(--seal)}
+
+/* 表格（横向滚动） */
+.tw{overflow-x:auto;margin:8px -14px;padding:0 14px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:12.5px;min-width:560px}
+th{font-family:var(--serif);text-align:left;padding:8px 10px;border-bottom:1.5px solid var(--line);background:rgba(227,219,200,.3);white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink2)}
+td:first-child{color:var(--ink)}
+td b{color:var(--ink)}
+tr:last-child td{border-bottom:0}
+
+/* 三年柱图 */
+.chart{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin:10px 0}
+.chart h4{font-family:var(--serif);font-size:14.5px;margin:0 0 8px}
+.brow{display:grid;grid-template-columns:36px 1fr 56px;align-items:center;gap:7px;margin:7px 0}
+.byear{font-size:11.5px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.btrack{height:13px;border-radius:7px;background:rgba(111,103,90,.12);overflow:hidden}
+.bar{height:100%;border-radius:7px;background:rgba(61,111,163,.75)}
+.bar.hot{background:var(--seal)}
+.bval{font-size:12px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink2)}
+.bval.hot{color:var(--seal);font-weight:700}
+.cnote{font-size:12px;color:var(--ink2);margin:7px 0 0;border-top:1px dashed var(--line);padding-top:7px}
+.cnote b{color:var(--ink)}
+
+/* 折叠 */
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:8px 0;overflow:hidden}
+summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:12px 14px;font-size:13.5px;font-weight:700;user-select:none}
+summary::-webkit-details-marker{display:none}
+summary svg{margin-left:auto;flex:none;transition:transform .25s;color:var(--ink2)}
+details[open] summary svg{transform:rotate(180deg)}
+.db{padding:0 14px 12px}
+.db p{font-size:13px;color:var(--ink2);margin:4px 0 0}
+.db b{color:var(--ink)}
+
+/* 清单 */
+.todorow{display:flex;align-items:flex-start;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:10px 12px;font-size:13.5px;margin:6px 0;cursor:pointer}
+.todorow input{appearance:none;-webkit-appearance:none;flex:none;width:19px;height:19px;border:1.5px solid var(--ink2);border-radius:6px;margin:2px 2px 0 0;position:relative;background:var(--card)}
+.todorow input:checked{background:var(--seal);border-color:var(--seal)}
+.todorow input:checked::after{content:"";position:absolute;left:5.5px;top:2px;width:4px;height:9px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(42deg)}
+.todorow input:checked + span{color:var(--ink2);text-decoration:line-through}
+.todorow b{color:var(--ink)}
+.todorow input:checked + span b{color:inherit}
+.todorow:active{transform:scale(.985)}
+
+.todotop{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin:10px 0}
+.ring-track{fill:none;stroke:rgba(111,103,90,.15);stroke-width:5}
+.ring-fg{fill:none;stroke:var(--seal);stroke-width:5;stroke-linecap:round;transition:stroke-dashoffset .45s cubic-bezier(.4,0,.2,1)}
+.ring-num{fill:var(--ink);font-size:13.5px;font-weight:700}
+.ring-lab{fill:var(--ink2);font-size:8px}
+.todotop .cta{flex:1;font-size:13px}
+.todotop .cta b{font-family:var(--serif);font-size:15px;display:block}
+.todotop .cta p{margin:2px 0 0;color:var(--ink2);font-size:12px}
+.reset{border:1px solid var(--line);background:transparent;color:var(--ink2);border-radius:9px;padding:7px 11px;font-size:12.5px}
+.reset:active{transform:scale(.94)}
+
+/* 底部页签 */
+.tabbar{position:fixed;bottom:0;left:0;right:0;z-index:9;display:flex;justify-content:space-around;max-width:520px;margin:0 auto;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+.tabbar button{flex:1;max-width:96px;border:0;background:transparent;color:var(--ink2);font-size:10.5px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;border-radius:10px}
+.tabbar button.active{color:var(--seal);font-weight:700}
+.tabbar svg{width:21px;height:21px}
+
+.strip{display:flex;gap:8px;font-size:12.5px;color:var(--ink2);background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:10px;padding:10px 12px;margin:10px 0}
+.strip svg{flex:none;width:15px;height:15px;color:var(--gold);margin-top:2px}
+.strip b{color:var(--ink)}
+.src{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;margin:6px 0}
+.src b{color:var(--ink2);font-weight:500}
+.foot{font-size:11px;color:var(--ink2);margin:8px 0 14px;text-align:center}
+.ico{width:16px;height:16px;flex:none}
+
+]]></style>
+<foreignObject width="100%" height="100%">
+<div xmlns="http://www.w3.org/1999/xhtml" id="appwrap" style="height:100vh;overflow-y:auto;-webkit-overflow-scrolling:touch;">
+
+<div id="app">
+
+<header class="top">
+  <div class="seal-mini">党员</div>
+  <div>
+    <h1>公考作战图</h1>
+    <p>3+2 中医学 · 盐城户籍 · 2029届本科应届</p>
+  </div>
+</header>
+
+<!-- ═══════ 首页 ═══════ -->
+<section class="page active" id="pg-home">
+  <div class="card">
+    <h4><svg xmlns="http://www.w3.org/2000/svg" class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 10v11h6v-6h6v6h6V10z"/></svg>学历结论（先记住这一条）</h4>
+    <ul class="plain">
+      <li><b>2029 年 6 月毕业 ＝ 全日制本科学历 ＋ 理学学士学位</b>（专业：中医学，省考目录归「医学类」，报名看专业名称、不看学位门类）</li>
+      <li>与高考本科同等待遇：可报一切「本科及以上并取得相应学位」的岗位</li>
+      <li>前提：<b>2027 年转段考核必须通过</b>——这是全盘计划的第一道门槛</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4><svg xmlns="http://www.w3.org/2000/svg" class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>倒计时</h4>
+    <p class="note" style="text-align:center;margin-bottom:0"><b>转段考核 / 大专毕业</b>（预计 2027-06-30）</p>
+    <div class="cd" role="timer" aria-label="距转段考核">
+      <span class="cd-cell"><b id="c0d">--</b><i>天</i></span>
+      <span class="cd-cell"><b id="c0h">--</b><i>时</i></span>
+      <span class="cd-cell"><b id="c0m">--</b><i>分</i></span>
+      <span class="cd-cell"><b id="c0s">--</b><i>秒</i></span>
+    </div>
+    <div class="cd-mini">
+      <span>省考公告（预计11-02）剩 <b id="c1d">--</b> 天</span>
+      <span>· 主战场笔试（预计2028-12-12）剩 <b id="c2d">--</b> 天</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4><svg xmlns="http://www.w3.org/2000/svg" class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4m0 1c4-2 8 2 14 0v9c-6 2-10-2-14 0"/></svg>两个窗口</h4>
+    <ul class="plain">
+      <li><span class="stamp ok sm">主战场</span> <b>2028.10—12</b>：以 2029 届应届身份连战<b>国考 → 江苏省考 → 上海市考</b>（应届不限户籍，上海唯一黄金窗）。</li>
+      <li><span class="stamp no sm">今年</span> 2026 年 12 月省考<b>无岗可报</b>——实查去年职位表：大专普通岗≈0（乡镇全本科、公安大专岗全是限男＋运动员/退役军人的特警岗）。不报名，安心读大专。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4><svg xmlns="http://www.w3.org/2000/svg" class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3v18M6 4h13l-3 4 3 4H6"/></svg>她的三把钥匙</h4>
+    <div class="chips">
+      <span class="chip"><b>中共党员</b> 限党员岗</span>
+      <span class="chip"><b>盐城户籍/生源</b> 本地岗护城河</span>
+      <span class="chip"><b>2029届应届</b> 全省+上海通行</span>
+    </div>
+    <p class="note" style="margin:0">中医学省考对口岗少，主力打法＝<b>不限专业岗＋三把锁</b>；专业主场在事业编卫健系统（2029 双保险）。</p>
+  </div>
+  <p class="foot">数据截至 2026-10-25 · 离线可用 · 以官方公告为准</p>
+</section>
+
+<!-- ═══════ 岗位 ═══════ -->
+<section class="page" id="pg-posts">
+  <h2 class="sec">她能报的岗位</h2>
+  <p class="note">江苏省 2026 年度职位表（盐城分表）真实职位，全部位于<b>盐城市</b>；属地按分局地名判定，2028 年职位表发布后按同口径复核。</p>
+
+  <h3 class="sub">第一梯队 · 不限专业（主力）</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th>职位</th><th>属地</th><th>人数</th><th>要点</th></tr></thead>
+    <tbody>
+      <tr><td><b>县纪委监委 · 派驻纪检监察组</b></td><td>县域（索引指向响水）</td><td>1</td><td><b>专业不限</b>＋纪检序列普遍<b>限党员</b>——头号目标岗型</td></tr>
+      <tr><td><b>县市场监管局 · 基层分局／执法大队（参公）</b></td><td>阜宁、射阳</td><td>1+1+2</td><td>专业不限 · 本科及以上</td></tr>
+      <tr><td><b>东台市市场监管局 · 三仓/唐洋分局</b></td><td>东台市</td><td>2</td><td>专业不限 · 本科及以上</td></tr>
+      <tr><td><b>兴桥镇 · 农村工作办公室</b></td><td>射阳县</td><td>1</td><td>专业不限 · <b>C 类卷</b>最友好</td></tr>
+      <tr><td><b>市公安局／阜宁县公安局 · 四级警长及以下</b></td><td>市区／阜宁</td><td>30+</td><td>多数不限专业 · B类＋公安专业课 · 体测视力</td></tr>
+      <tr><td><b>各乡镇机关综合岗</b></td><td>盐都/滨海/射阳/东台等</td><td>多岗</td><td>多限专业大类＋少量不限 · C 类卷 · 注意服务年限</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="sub">第二梯队 · 医学类相关（逐岗电话确认）</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th>类型</th><th>属地</th><th>中医学可否</th></tr></thead>
+    <tbody>
+      <tr><td><b>标注「医学类」的岗位</b>（市卫健委等）</td><td>盐城市区</td><td><span class="stamp ok sm">对口可报</span></td></tr>
+      <tr><td><b>省盐城监狱医务岗</b>（列举临床/中西医临床等）</td><td>盐城（省属）</td><td><span class="stamp warn sm">电话确认</span></td></tr>
+      <tr><td><b>市场监管药学类岗 14 个</b></td><td>阜宁/射阳/东台</td><td><span class="stamp no sm">大概率不可</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3 class="sub">第三梯队 · 加锁减员</h3>
+  <div class="tw">
+  <table>
+    <thead><tr><th>类型</th><th>属地</th><th>钥匙</th></tr></thead>
+    <tbody>
+      <tr><td>纪委监委限党员岗（12 岗 17 人）</td><td>响水等县市区</td><td><span class="stamp ok sm">党员</span></td></tr>
+      <tr><td>限盐城户籍/生源地岗</td><td>盐城各县市区</td><td><span class="stamp ok sm">户籍</span></td></tr>
+      <tr><td>限应届专项岗</td><td>全省 13 市</td><td><span class="stamp ok sm">应届</span></td></tr>
+      <tr><td>国考在盐职位（税务等）</td><td>盐城/江苏</td><td><span class="stamp ok sm">2028可报</span></td></tr>
+      <tr><td>上海市考</td><td>上海</td><td><span class="stamp ok sm">应届一年</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="strip">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v18M3 12h18"/></svg>
+    <span><b>中医学的真正主场</b>：事业单位统考（每年上半年）的中医院、卫健、医保岗对口面极宽，与公务员并行报名，天然双保险。</span>
+  </div>
+
+  <details>
+    <summary>备查：14 个食药岗原文（含属地）<svg xmlns="http://www.w3.org/2000/svg" class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+    <div class="db"><p><b>药学类 7 岗</b>——阜宁：益林分局·药学类；射阳：基层分局·药学类、四级主办·药学/中药学/制药工程等、执法大队（参公）·药学类、兴桥分局·医药化工类、执法大队·医药化工类/法律类、基层分局·药学类/医药化工类/计算机（软件）类。<b>食品工程类 7 岗 8 人</b>——射阳：行政执法员 2 人、四级主办 2 人（含食品质量与安全）、合德分局、盘湾分局、食品安全监督管理科；阜宁：益林分局。另有东台市局不限专业 2 岗。<b>注：要求药学类/食品工程类，中医学不在其列。</b></p></div>
+  </details>
+</section>
+
+<!-- ═══════ 数据 ═══════ -->
+<section class="page" id="pg-data">
+  <h2 class="sec">近三年对比</h2>
+  <div class="chart">
+    <h4>计划招录（人）</h4>
+    <div class="brow"><span class="byear">2024</span><div class="btrack"><div class="bar" style="width:99.7%"></div></div><b class="bval">9470</b></div>
+    <div class="brow"><span class="byear">2025</span><div class="btrack"><div class="bar" style="width:100%"></div></div><b class="bval">9504</b></div>
+    <div class="brow"><span class="byear">2026</span><div class="btrack"><div class="bar hot" style="width:86%"></div></div><b class="bval hot">8179</b></div>
+    <p class="cnote">2026 年度<b>缩招约 14%</b></p>
+  </div>
+  <div class="chart">
+    <h4>报名人数（万）</h4>
+    <div class="brow"><span class="byear">2024</span><div class="btrack"><div class="bar" style="width:93.5%"></div></div><b class="bval">41.0</b></div>
+    <div class="brow"><span class="byear">2025</span><div class="btrack"><div class="bar" style="width:90.5%"></div></div><b class="bval">39.7</b></div>
+    <div class="brow"><span class="byear">2026</span><div class="btrack"><div class="bar hot" style="width:100%"></div></div><b class="bval hot">43.9</b></div>
+    <p class="cnote">岗位缩、考生增，<b>一升一降</b></p>
+  </div>
+  <div class="chart">
+    <h4>平均竞争比</h4>
+    <div class="brow"><span class="byear">2024</span><div class="btrack"><div class="bar" style="width:80.8%"></div></div><b class="bval">43.3:1</b></div>
+    <div class="brow"><span class="byear">2025</span><div class="btrack"><div class="bar" style="width:77.8%"></div></div><b class="bval">41.7:1</b></div>
+    <div class="brow"><span class="byear">2026</span><div class="btrack"><div class="bar hot" style="width:100%"></div></div><b class="bval hot">53.6:1</b></div>
+    <p class="cnote">三年最热（最高岗 2602:1）</p>
+  </div>
+
+  <div class="card">
+    <h4><svg xmlns="http://www.w3.org/2000/svg" class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 7-7"/><path d="M14 8h6v6"/></svg>三年数据说明什么</h4>
+    <ul class="plain">
+      <li><b>赛道升温</b>：招录 9504→8179（－14%），报名 39.7→43.9 万（＋10%），竞争比 41.7→53.6——2029 年大概率延续高热。</li>
+      <li><b>门槛抬高</b>：本科及以上为主体（约 6900 人）、研究生 1006 人；大专可报仅约 270 人（3%）且盐城实查普通岗≈0。</li>
+      <li><b>推论</b>：裸报「三不限」＝50:1 起步；必须用<b>党员＋盐城户籍＋应届</b>锁定岗减负，事业编卫健兜底。</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4><svg xmlns="http://www.w3.org/2000/svg" class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>每年 10 月发什么</h4>
+    <ul class="plain">
+      <li><b>10 月中旬</b>：国考职位表（2027 年度：10-14，江苏 926 岗 1630 人）——她在读报不了，2028 年首战。</li>
+      <li><b>10 月底—11 月初</b>：<b>江苏省考公告＋职位表</b>（去年 10-31 发布）——她唯一需要看一眼的清单。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════ 清单 ═══════ -->
+<section class="page" id="pg-todo">
+  <h2 class="sec">行动清单</h2>
+  <div class="todotop">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="76" height="76" role="img" aria-label="完成进度">
+      <circle class="ring-track" cx="32" cy="32" r="26"></circle>
+      <circle class="ring-fg" id="ringFg" cx="32" cy="32" r="26" stroke-dasharray="163.4" stroke-dashoffset="163.4" transform="rotate(-90 32 32)"></circle>
+      <text class="ring-num" id="ringNum" x="32" y="31" text-anchor="middle">0/16</text>
+      <text class="ring-lab" x="32" y="44" text-anchor="middle">已完成</text>
+    </svg>
+    <div class="cta"><b id="ctaTitle">下一步：问转段考核细则</b><p>勾选保存在本机，换手机不跟随</p></div>
+    <button class="reset" id="btnReset" type="button">重置</button>
+  </div>
+  <div id="todoWrap"></div>
+  <details>
+    <summary>考前七周冲刺模板（2028 秋套用）<svg xmlns="http://www.w3.org/2000/svg" class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+    <div class="db">
+      <p><b>第 1—2 周</b>：真题摸底；主攻资料分析＋判断推理；申论精读 3 篇范文。</p>
+      <p><b>第 3—5 周</b>：言语每日 20 题、数量只练简单题、常识每天 10 分钟；申论每周 2 归纳＋1 应用文。</p>
+      <p><b>第 6—7 周</b>：隔天全真模考（近三年 B/C 卷）；大作文 2 套框架；错题回炉。</p>
+    </div>
+  </details>
+</section>
+
+<!-- ═══════ 政策 ═══════ -->
+<section class="page" id="pg-rule">
+  <h2 class="sec">政策依据与备查</h2>
+
+  <details open>
+    <summary>中医学＋理学学位怎么算？<svg xmlns="http://www.w3.org/2000/svg" class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+    <div class="db"><p>2029 年 6 月取得<b>全日制本科毕业证＋理学学士学位</b>（中医学专业按理学门类授予）。公务员报名按<b>专业名称</b>匹配目录：中医学→<b>「医学类」</b>；职位学历栏标准写法「本科及以上并取得相应学位」，<b>极少限定学位门类</b>，理学学士完全满足。个别医务岗若备注「医学学位」再电话确认。</p></div>
+  </details>
+  <details>
+    <summary>在读学生能不能报？<svg xmlns="http://www.w3.org/2000/svg" class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+    <div class="db"><p>全日制在读<b>非应届</b>不得报考；<b>毕业学年可按应届报</b>。她的大专毕业学年有身份但实查无岗；2027.09—2028.09（本科非毕业年级）不能报；2028 年秋起以 2029 届应届全面开报。</p></div>
+  </details>
+  <details>
+    <summary>为何今年 12 月无岗可报（实查记录）<svg xmlns="http://www.w3.org/2000/svg" class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+    <div class="db">
+      <p><b>乡镇机关</b>：抽查大纵湖（盐都）、八滩（滨海）、兴桥（射阳）、东台镇（东台）及响水乡镇机关组——全部「本科及以上」；响水 3 个不限专业岗为定向服务基层项目/退役军人。</p>
+      <p><b>公安</b>：市公安局大专岗 4 个＋阜宁县公安局 2 个，原文「特警（突击）岗位，限男性，须健将级以上运动员或特战实战退役军人（团级证明），裸眼视力≥4.8」。</p>
+      <p><b>市场监管/监狱/司法局</b>：无一大专岗。全省「大专可报约 270 人」多为特殊岗、定向岗、外市限户籍岗。</p>
+    </div>
+  </details>
+  <details>
+    <summary>户籍与上海 · 年龄与报名规则<svg xmlns="http://www.w3.org/2000/svg" class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+    <div class="db"><p>江苏户籍限制逐岗写明，本科应届基本全省通行。上海应届不限户籍；非应届需硕士＋居住证 1 年＋积分 120。年龄放宽至 38 周岁以下。全省限报 1 个职位，缴费成功才算报名完成；笔试 A/B/C 三类卷，公安加考专业课＋体测。</p></div>
+  </details>
+
+  <div class="card">
+    <h4><svg xmlns="http://www.w3.org/2000/svg" class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1.5 1.5"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7L12.5 19"/></svg>官方渠道</h4>
+    <div class="src">
+      <a href="http://www.jsgkw.org" target="_blank" rel="noopener">江苏公务员考试网</a>
+      <a href="https://www.jszzb.gov.cn" target="_blank" rel="noopener">省委组织部</a>
+      <a href="https://jshrss.jiangsu.gov.cn" target="_blank" rel="noopener">省人社厅</a>
+      <a href="https://www.hsyf.gov.cn/z/2980" target="_blank" rel="noopener">盐城考录专题</a>
+      <a href="https://www.shacs.gov.cn" target="_blank" rel="noopener">上海公务员局</a>
+    </div>
+    <p class="note" style="margin:0">数据来源：2026 年度盐城职位表逐单位实查；近三年省考统计（江苏公务员考试网/新华网/中公/华图）。2027 年度公告预计 11 月初发布。</p>
+  </div>
+  <p class="foot">公考作战图 · 2026-10 版 · 本机离线运行</p>
+</section>
+
+<!-- ═══════ 底部页签 ═══════ -->
+<nav class="tabbar" aria-label="主导航">
+  <button class="active" data-page="pg-home" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 10v11h6v-6h6v6h6V10z"/></svg>首页
+  </button>
+  <button data-page="pg-posts" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg>岗位
+  </button>
+  <button data-page="pg-data" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>数据
+  </button>
+  <button data-page="pg-todo" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="m8.5 12 2.5 2.5L16 9"/></svg>清单
+  </button>
+  <button data-page="pg-rule" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19a2 2 0 0 1 2-2h13"/></svg>政策
+  </button>
+</nav>
+</div>
+
+
+</div>
+</foreignObject>
+<script><![CDATA[
+var ce=function(t){return document.createElementNS("http://www.w3.org/1999/xhtml",t)};
+
+(function(){
+  'use strict';
+  /* ── 页签 ── */
+  var tabs=document.querySelectorAll('.tabbar button');
+  tabs.forEach(function(t){
+    t.addEventListener('click',function(){
+      tabs.forEach(function(x){x.classList.toggle('active',x===t);});
+      document.querySelectorAll('.page').forEach(function(p){p.classList.toggle('active',p.id===t.getAttribute('data-page'));});
+      window.scrollTo(0,0);var __w=document.getElementById('appwrap');if(__w)__w.scrollTop=0;
+    });
+  });
+
+  /* ── 倒计时 ── */
+  var tg=[{d:new Date('2027-06-30T00:00:00+08:00'),p:'c0'},{d:new Date('2026-11-02T09:00:00+08:00'),p:'c1'},{d:new Date('2028-12-12T09:00:00+08:00'),p:'c2'}];
+  function pad(n){return n<10?'0'+n:''+n}
+  function tick(){
+    var now=new Date();
+    tg.forEach(function(t){
+      var ms=t.d-now();
+      if(ms<=0){['d','h','m','s'].forEach(function(k){var e=document.getElementById(t.p+k);if(e)e.textContent='0';});return;}
+      var s=Math.floor(ms/1000),v={d:Math.floor(s/86400),h:Math.floor(s%86400/3600),m:Math.floor(s%3600/60),s:s%60};
+      for(var k in v){var e=document.getElementById(t.p+k);if(e)e.textContent=k==='d'?v[k]:pad(v[k]);}
+    });
+  }
+  tick();setInterval(tick,1000);
+
+  /* ── 清单 ── */
+  var TODO=[
+    {s:'现在',t:'向教务处问清<b>转段考核</b>：科目、时间、挂科红线'},
+    {s:'现在',t:'记下<b>本科段对接院校与专业全称</b>，确认「医学类」归属'},
+    {s:'现在',t:'报考<b>英语四级</b>（学位条件＋上海积分筹码）'},
+    {s:'现在',t:'确认党员状态与<b>转正时间线</b>、组织关系转接'},
+    {s:'现在',t:'11 月省考公告发布后，十分钟核对学历列有无大专岗'},
+    {s:'现在',t:'行测常识日积月累＋中医专业课不放松'},
+    {s:'2027',t:'本科入学第一周<b>竞选班委／进学生组织</b>'},
+    {s:'2027',t:'绩点保持前列，锁定<b>全日制本科＋理学学士</b>'},
+    {s:'2028',t:'行测日练＋申论周读，暑假完成真题强化'},
+    {s:'2028',t:'10 月<b>国考报名</b>（应届首战）'},
+    {s:'2028',t:'11 月省考职位表四步筛选：<b>学历→专业→户籍→党员</b>'},
+    {s:'2028',t:'医务类岗位<b>电话确认</b>中医学＋理学学位可否报'},
+    {s:'2028',t:'备齐报名材料：<b>就业推荐表</b>、证件照、党员证明等'},
+    {s:'2028',t:'缴费成功才算报名完成；12 月初打印准考证'},
+    {s:'2028',t:'12 月中旬省考笔试＋上海市考笔试，考前踩点'},
+    {s:'2029',t:'公务员未上岸则<b>事业单位统考卫健岗</b>接续报名'}
+  ];
+  var CTAS=['下一步：问转段考核细则','下一步：确认专业与学位归属','下一步：报英语四级','下一步：确认党员转正线','下一步：11月盯公告学历列','下一步：常识日积月累','下一步：入学即竞选班委','下一步：锁定绩点与学位','下一步：暑期真题强化','下一步：10月国考报名','下一步：四步筛职位表','下一步：电话确认医务岗','下一步：备齐报名材料','下一步：缴费+准考证','下一步：12月笔试踩点','下一步：事业编接续'];
+  var KEY='gkzk-todo-v1',CIRC=163.4;
+  var done=TODO.map(function(){return false;});
+  try{var raw=localStorage.getItem(KEY);if(raw){var arr=JSON.parse(raw);if(arr.length===TODO.length)done=arr.map(Boolean);}}catch(e){}
+  var wrap=document.getElementById('todoWrap'),ring=document.getElementById('ringFg'),
+      num=document.getElementById('ringNum'),cta=document.getElementById('ctaTitle');
+  TODO.forEach(function(item,i){
+    var l=ce('label');l.className='todorow';
+    var cb=ce('input');cb.type='checkbox';cb.checked=!!done[i];
+    var sp=ce('span');sp.innerHTML='<b>['+item.s+']</b> '+item.t;
+    cb.addEventListener('change',function(){
+      done[i]=cb.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(done));}catch(e){}
+      render(true);
+    });
+    l.appendChild(cb);l.appendChild(sp);wrap.appendChild(l);
+  });
+  function render(anim){
+    var n=done.filter(Boolean).length;
+    ring.style.strokeDashoffset=(CIRC*(1-n/TODO.length)).toFixed(1);
+    if(anim){
+      var from=parseInt(num.textContent,10)||0,t0=null;
+      function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/300,1);
+        num.textContent=Math.round(from+(n-from)*p)+'/'+TODO.length;
+        if(p<1)requestAnimationFrame(step);}
+      requestAnimationFrame(step);
+    }else{num.textContent=n+'/'+TODO.length;}
+    cta.textContent=n===0?CTAS[0]:CTAS[Math.min(n-1,CTAS.length-1)];
+    wrap.querySelectorAll('input').forEach(function(cb,i){cb.checked=!!done[i];});
+  }
+  document.getElementById('btnReset').addEventListener('click',function(){
+    done=done.map(function(){return false;});
+    try{localStorage.setItem(KEY,JSON.stringify(done));}catch(e){}
+    render(true);
+  });
+  render(false);
+})();
+
+]]></script>
+</svg>
