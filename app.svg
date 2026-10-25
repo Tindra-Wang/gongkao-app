@@ -399,7 +399,7 @@ var ce=function(t){return document.createElementNS("http://www.w3.org/1999/xhtml
   function tick(){
     var now=new Date();
     tg.forEach(function(t){
-      var ms=t.d-now();
+      var ms=t.d-Date.now();
       if(ms<=0){['d','h','m','s'].forEach(function(k){var e=document.getElementById(t.p+k);if(e)e.textContent='0';});return;}
       var s=Math.floor(ms/1000),v={d:Math.floor(s/86400),h:Math.floor(s%86400/3600),m:Math.floor(s%3600/60),s:s%60};
       for(var k in v){var e=document.getElementById(t.p+k);if(e)e.textContent=k==='d'?v[k]:pad(v[k]);}
